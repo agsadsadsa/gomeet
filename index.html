@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Google Meet 使用说明</title>
+  <style>
+    body {
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background-color: #f0f2f5;
+      padding: 2em;
+      margin: 0 auto;
+      max-width: 960px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
+
+    .step-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      padding: 1.5em;
+      margin-bottom: 2em;
+      transition: transform 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .step-card h2 {
+      color: #007acc;
+      font-size: 1.4em;
+      margin-bottom: 0.5em;
+    }
+
+    img.screenshot {
+      width: 100%;
+      margin-top: 1em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .fixed-copy-box {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1em;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      width: 280px;
+    }
+
+    .fixed-copy-box h2 {
+      font-size: 1.1em;
+      margin-bottom: 0.5em;
+    }
+
+    .copy-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    .copy-text {
+      background: #f9f9f9;
+      padding: 0.5em;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9em;
+      overflow-x: auto;
+      word-break: break-all;
+    }
+
+    .copy-buttons {
+      display: flex;
+      gap: 0.5em;
+    }
+
+    .copy-button {
+      flex: 1;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5em 0.8em;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .copy-button:hover {
+      background-color: #005fa3;
+    }
+
+    ul {
+      padding-left: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Google Meet 加入使用指南</h1>
+
+  <!-- 固定复制链接与打开链接按钮 -->
+  <div class="fixed-copy-box">
+    <h2>第一步：点复制链接按钮</h2>
+    <p>点击下方按钮复制或打开会议链接(手机直接点打开就行)：</p>
+    <div class="copy-box">
+      <div class="copy-text" id="meetLink">正在加载...</div>
+      <div class="copy-buttons">
+        <button class="copy-button" onclick="copyMeetLink()">复制</button>
+        <button class="copy-button" onclick="openMeetLink()">打开</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第二步 -->
+  <div class="step-card">
+    <h2>第二步：打开无痕浏览器</h2>
+    <p>按截图操作，点击右上角菜单，选择“打开新的无痕式窗口”：</p>
+    <img src="static/step2.png" class="screenshot" alt="无痕窗口"/>
+    <p><strong>快捷键方式：</strong></p>
+    <ul>
+      <li>Windows：<code>Ctrl + Shift + N</code></li>
+      <li>Mac：<code>⌘ + Shift + N</code></li>
+    </ul>
+  </div>
+
+  <!-- 第三步 -->
+  <div class="step-card">
+    <h2>第三步：按截图操作</h2>
+    <img src="static/step3.png" class="screenshot" alt="步骤3截图"/>
+  </div>
+
+  <!-- 第四步 -->
+  <div class="step-card">
+    <h2>第四步：按截图操作</h2>
+    <img src="static/step4.png" class="screenshot" alt="步骤4截图"/>
+  </div>
+
+  <!-- 第五步 -->
+  <div class="step-card">
+    <h2>第五步：按截图操作</h2>
+    <img src="static/step5.png" class="screenshot" alt="步骤5截图"/>
+  </div>
+
+  <script>
+    const links = {
+      "1": "https://meet.google.com/rty-xerj-gno",
+      "2": "https://meet.google.com/xzw-szuu-cfq",
+      "3": "https://meet.google.com/zaw-cqpy-frw",
+      "4": "https://meet.google.com/xdk-xsfw-faw",
+      "5": "https://meet.google.com/arm-cwvs-yst",
+      "6": "https://meet.google.com/ggj-gxpe-yno",
+      "7": "https://meet.google.com/fff-vkgq-fxh",
+      "8": "https://meet.google.com/dbx-ftcq-adp",
+      "9": "https://meet.google.com/abc-defg-009"
+    };
+
+    const path = window.location.pathname.split("/")[1];
+    const meetLink = links[path] || "链接不存在，请检查地址路径";
+
+    document.getElementById("meetLink").textContent = meetLink;
+
+    function copyMeetLink() {
+      navigator.clipboard.writeText(meetLink).then(() => {
+        alert("已复制链接到剪贴板！");
+      });
+    }
+
+    function openMeetLink() {
+      if (meetLink.startsWith("http")) {
+        window.open(meetLink, "_blank");
+      } else {
+        alert("无效链接，无法打开。");
+      }
+    }
+  </script>
+</body>
+</html>
