@@ -119,7 +119,7 @@
       <div class="copy-text" id="meetLink">正在加载...</div>
       <div class="copy-buttons">
         <button class="copy-button" id="copyButton" onclick="copyMeetLink()">👉复制👈</button>
-        <button class="copy-button" onclick="openMeetLink()">手机👉【打开】</button>
+        <button class="copy-button" id="openButton" onclick="openMeetLink()">手机👉【打开】</button>
       </div>
     </div>
   </div>
@@ -169,7 +169,6 @@
 
     const path = window.location.pathname.split("/")[1];
     const meetLink = links[path] || "链接不存在，请检查地址路径";
-
     document.getElementById("meetLink").textContent = meetLink;
 
     function copyMeetLink() {
@@ -186,18 +185,24 @@
       }
     }
 
-    // 判断是否为移动设备或平板
     function isMobileOrTablet() {
       return /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgent);
     }
 
-    // 如果不是移动设备就隐藏“复制”按钮
-    if (!isMobileOrTablet()) {
+    window.addEventListener("DOMContentLoaded", () => {
       const copyBtn = document.getElementById("copyButton");
-      if (copyBtn) {
-        copyBtn.style.display = "none";
+      const openBtn = document.getElementById("openButton");
+
+      if (isMobileOrTablet()) {
+        // 手机：只显示“打开”
+        if (copyBtn) copyBtn.style.display = "none";
+        if (openBtn) openBtn.style.display = "inline-block";
+      } else {
+        // 电脑：只显示“复制”
+        if (copyBtn) copyBtn.style.display = "inline-block";
+        if (openBtn) openBtn.style.display = "none";
       }
-    }
+    });
   </script>
 </body>
 </html>
