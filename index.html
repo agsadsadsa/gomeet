@@ -106,6 +106,15 @@
     ul {
       padding-left: 1.2em;
     }
+
+    .mobile-guide {
+      display: none;
+      background-color: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 1em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
@@ -124,34 +133,38 @@
     </div>
   </div>
 
-  <!-- 第二步 -->
-  <div class="step-card">
-    <h2>第二步：打开无痕浏览器</h2>
-    <p>按截图操作，点击右上角菜单，选择“打开新的无痕式窗口”：</p>
-    <img src="static/step2.png" class="screenshot" alt="无痕窗口"/>
-    <p><strong>快捷键方式：</strong></p>
-    <ul>
-      <li>Windows：<code>Ctrl + Shift + N</code></li>
-      <li>Mac：<code>⌘ + Shift + N</code></li>
-    </ul>
+  <!-- 手机提示 -->
+  <div class="mobile-guide" id="mobileGuide">
+    手机端请参考教程 👉 <a href="https://drive.google.com/file/d/1dkYX3A-09OY6u-F_rcgWR_bkHIL1gFg6/view?usp=sharing" target="_blank">点此查看</a>
   </div>
 
-  <!-- 第三步 -->
-  <div class="step-card">
-    <h2>第三步：按截图操作</h2>
-    <img src="static/step3.png" class="screenshot" alt="步骤3截图"/>
-  </div>
+  <!-- PC 步骤 -->
+  <div id="pcSteps">
+    <div class="step-card">
+      <h2>第二步：打开无痕浏览器</h2>
+      <p>点击右上角菜单，选择“打开新的无痕式窗口”：</p>
+      <img src="static/step2.png" class="screenshot" alt="无痕窗口"/>
+      <p><strong>快捷键方式：</strong></p>
+      <ul>
+        <li>Windows：<code>Ctrl + Shift + N</code></li>
+        <li>Mac：<code>⌘ + Shift + N</code></li>
+      </ul>
+    </div>
 
-  <!-- 第四步 -->
-  <div class="step-card">
-    <h2>第四步：按截图操作</h2>
-    <img src="static/step4.png" class="screenshot" alt="步骤4截图"/>
-  </div>
+    <div class="step-card">
+      <h2>第三步：按截图操作</h2>
+      <img src="static/step3.png" class="screenshot" alt="步骤3截图"/>
+    </div>
 
-  <!-- 第五步 -->
-  <div class="step-card">
-    <h2>第五步：按截图操作</h2>
-    <img src="static/step5.png" class="screenshot" alt="步骤5截图"/>
+    <div class="step-card">
+      <h2>第四步：按截图操作</h2>
+      <img src="static/step4.png" class="screenshot" alt="步骤4截图"/>
+    </div>
+
+    <div class="step-card">
+      <h2>第五步：按截图操作</h2>
+      <img src="static/step5.png" class="screenshot" alt="步骤5截图"/>
+    </div>
   </div>
 
   <script>
@@ -192,15 +205,21 @@
     window.addEventListener("DOMContentLoaded", () => {
       const copyBtn = document.getElementById("copyButton");
       const openBtn = document.getElementById("openButton");
+      const mobileGuide = document.getElementById("mobileGuide");
+      const pcSteps = document.getElementById("pcSteps");
 
       if (isMobileOrTablet()) {
-        // 手机：只显示“打开”
+        // 手机端：只显示“打开”按钮和教程链接
         if (copyBtn) copyBtn.style.display = "none";
         if (openBtn) openBtn.style.display = "inline-block";
+        if (mobileGuide) mobileGuide.style.display = "block";
+        if (pcSteps) pcSteps.style.display = "none";
       } else {
-        // 电脑：只显示“复制”
+        // 电脑端：只显示“复制”按钮和详细步骤
         if (copyBtn) copyBtn.style.display = "inline-block";
         if (openBtn) openBtn.style.display = "none";
+        if (mobileGuide) mobileGuide.style.display = "none";
+        if (pcSteps) pcSteps.style.display = "block";
       }
     });
   </script>
