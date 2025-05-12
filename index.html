@@ -118,7 +118,7 @@
     <div class="copy-box">
       <div class="copy-text" id="meetLink">正在加载...</div>
       <div class="copy-buttons">
-        <button class="copy-button" onclick="copyMeetLink()">复制</button>
+        <button class="copy-button" id="copyButton" onclick="copyMeetLink()">复制</button>
         <button class="copy-button" onclick="openMeetLink()">打开</button>
       </div>
     </div>
@@ -183,6 +183,19 @@
         window.open(meetLink, "_blank");
       } else {
         alert("无效链接，无法打开。");
+      }
+    }
+
+    // 判断是否为移动设备或平板
+    function isMobileOrTablet() {
+      return /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgent);
+    }
+
+    // 如果不是移动设备就隐藏“复制”按钮
+    if (!isMobileOrTablet()) {
+      const copyBtn = document.getElementById("copyButton");
+      if (copyBtn) {
+        copyBtn.style.display = "none";
       }
     }
   </script>
