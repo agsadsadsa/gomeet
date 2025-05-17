@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Google Meet 使用说明</title>
   <style>
     body {
@@ -53,17 +53,52 @@
       top: 20px;
       right: 20px;
       background-color: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 1em;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 1.2em;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      width: 280px;
+      width: 450px;
+      overflow: hidden;
+    }
+
+    .fixed-copy-box::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: conic-gradient(red, orange, yellow, green, cyan, blue, violet, red);
+      border-radius: 20px;
+      z-index: 1;
+      animation: borderRotate 6s linear infinite;
+      filter: blur(9px);
+      opacity: 0.9;
+    }
+
+    .fixed-copy-box::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      background: white;
+      border-radius: 14px;
+      z-index: 2;
+    }
+
+    .fixed-copy-box * {
+      position: relative;
+      z-index: 3;
     }
 
     .fixed-copy-box h2 {
       font-size: 1.1em;
       margin-bottom: 0.5em;
+      font-weight: 800;
+      color: #ff4081;
+      text-shadow: 0 0 6px rgba(255, 64, 129, 0.5);
     }
 
     .copy-box {
@@ -95,12 +130,15 @@
       border-radius: 6px;
       padding: 0.5em 0.8em;
       font-size: 0.9em;
+      font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 122, 204, 0.6);
     }
 
     .copy-button:hover {
       background-color: #005fa3;
+      transform: scale(1.05);
     }
 
     ul {
@@ -115,15 +153,24 @@
       margin: 2em 0;
       border-radius: 8px;
     }
+
+    @keyframes borderRotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Google Meet 加入使用指南</h1>
+  <h1>👇 Google Meet 加入使用指南 👉</h1>
 
   <!-- 固定复制链接与打开链接按钮 -->
   <div class="fixed-copy-box">
     <h2>第一步：点复制链接按钮</h2>
-    <p>点击下方按钮复制或打开会议链接(手机直接点打开就行)：</p>
+    <p>点击下方按钮复制或打开会议链接（手机直接点打开）：</p>
     <div class="copy-box">
       <div class="copy-text" id="meetLink">正在加载...</div>
       <div class="copy-buttons">
@@ -135,9 +182,8 @@
 
   <!-- 手机提示 -->
   <div class="mobile-guide" id="mobileGuide">
-    📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱📱
-    手机端直接点上面的按钮打开，会自动跳转到手机的google meet软件上，如果手机的google meet不小心登录了，请切换成不登录状态，详情请参考教程，： 
-    👉 <a href="https://youtu.be/nXj9VF2NcR4" target="_blank">点此查看视频</a>
+    📱 手机端点上面的【打开】按钮，会跳转到 Google Meet App。如已登录，请切换为匿名使用：
+    👉 <a href="https://youtu.be/nXj9VF2NcR4" target="_blank">查看教程视频</a>
   </div>
 
   <!-- PC 步骤 -->
@@ -145,7 +191,7 @@
     <div class="step-card">
       <h2>第二步：打开无痕浏览器</h2>
       <p>点击右上角菜单，选择“打开新的无痕式窗口”：</p>
-      <img src="static/step2.png" class="screenshot" alt="无痕窗口"/>
+      <img src="static/step2.png" class="screenshot" alt="无痕窗口" />
       <p><strong>快捷键方式：</strong></p>
       <ul>
         <li>Windows：<code>Ctrl + Shift + N</code></li>
@@ -155,17 +201,17 @@
 
     <div class="step-card">
       <h2>第三步：按截图操作</h2>
-      <img src="static/step3.png" class="screenshot" alt="步骤3截图"/>
+      <img src="static/step3.png" class="screenshot" alt="步骤3截图" />
     </div>
 
     <div class="step-card">
       <h2>第四步：按截图操作</h2>
-      <img src="static/step4.png" class="screenshot" alt="步骤4截图"/>
+      <img src="static/step4.png" class="screenshot" alt="步骤4截图" />
     </div>
 
     <div class="step-card">
       <h2>第五步：按截图操作</h2>
-      <img src="static/step5.png" class="screenshot" alt="步骤5截图"/>
+      <img src="static/step5.png" class="screenshot" alt="步骤5截图" />
     </div>
   </div>
 
@@ -180,7 +226,7 @@
       "ryr": "https://meet.google.com/doi-cpck-ryr",
       "qxr": "https://meet.google.com/kyy-myox-qxr",
       "ufw": "https://meet.google.com/wyf-ttop-ufw",
-      "10": "https://meet.google.com/rty-xerj-gno"
+      "10":  "https://meet.google.com/rty-xerj-gno"
     };
 
     const path = window.location.pathname.split("/")[1];
@@ -212,17 +258,15 @@
       const pcSteps = document.getElementById("pcSteps");
 
       if (isMobileOrTablet()) {
-        // 手机端：只显示“打开”按钮和教程链接
-        if (copyBtn) copyBtn.style.display = "none";
-        if (openBtn) openBtn.style.display = "inline-block";
-        if (mobileGuide) mobileGuide.style.display = "block";
-        if (pcSteps) pcSteps.style.display = "none";
+        copyBtn.style.display = "none";
+        openBtn.style.display = "inline-block";
+        mobileGuide.style.display = "block";
+        pcSteps.style.display = "none";
       } else {
-        // 电脑端：只显示“复制”按钮和详细步骤
-        if (copyBtn) copyBtn.style.display = "inline-block";
-        if (openBtn) openBtn.style.display = "none";
-        if (mobileGuide) mobileGuide.style.display = "none";
-        if (pcSteps) pcSteps.style.display = "block";
+        copyBtn.style.display = "inline-block";
+        openBtn.style.display = "none";
+        mobileGuide.style.display = "none";
+        pcSteps.style.display = "block";
       }
     });
   </script>
