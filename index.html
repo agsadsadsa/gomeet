@@ -50,8 +50,9 @@
 
     .fixed-copy-box {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: #ffffff;
       border-radius: 16px;
       padding: 1.2em;
@@ -59,6 +60,13 @@
       z-index: 1000;
       width: 310px;
       overflow: hidden;
+      transition: top 1.2s ease, left 1.2s ease, transform 1.2s ease;
+    }
+
+    .fixed-copy-box.move-to-top-right {
+      top: 20px;
+      left: calc(100% - 360px); /* 310px 宽度 + 50px 右边距 + 5px 伪元素扩展 */
+      transform: translate(0, 0);
     }
 
     .fixed-copy-box::before {
@@ -141,6 +149,26 @@
       transform: scale(1.05);
     }
 
+    .step-copy-button {
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5em 0.8em;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 122, 204, 0.6);
+      margin-top: 0.5em;
+      display: inline-block;
+    }
+
+    .step-copy-button:hover {
+      background-color: #005fa3;
+      transform: scale(1.05);
+    }
+
     ul {
       padding-left: 1.2em;
     }
@@ -168,7 +196,7 @@
   <h1>👇 Google Meet 加入使用指南 👉</h1>
 
   <!-- 固定复制链接与打开链接按钮 -->
-  <div class="fixed-copy-box">
+  <div class="fixed-copy-box" id="copyBox">
     <h2>第一步：点复制链接按钮</h2>
     <p>点击下方按钮复制或打开会议链接
       <br>（手机直接点打开）：</p>
@@ -199,6 +227,7 @@
       <h2>第一步：获取 Google Meet 会议链接</h2>
       <p>下面是你要加入的 Google Meet 会议链接：</p>
       <div class="copy-text" id="stepLink">正在加载...</div>
+      <button class="step-copy-button" onclick="copyStepLink()">复制链接</button>
       <p>请复制链接，接着打开浏览器的无痕窗口进行粘贴访问。</p>
     </div>
 
@@ -254,6 +283,13 @@
       });
     }
 
+    function copyStepLink() {
+      const stepLink = document.getElementById("stepLink").textContent;
+      navigator.clipboard.writeText(stepLink).then(() => {
+        alert("已复制链接到剪贴板！\n打开无痕窗口后粘贴访问！");
+      });
+    }
+
     function openMeetLink() {
       if (meetLink.startsWith("http")) {
         window.open(meetLink, "_blank");
@@ -271,6 +307,7 @@
       const openBtn = document.getElementById("openButton");
       const mobileGuide = document.getElementById("mobileGuide");
       const pcSteps = document.getElementById("pcSteps");
+      const copyBox = document.getElementById("copyBox");
 
       if (isMobileOrTablet()) {
         copyBtn.style.display = "none";
@@ -283,6 +320,11 @@
         mobileGuide.style.display = "none";
         pcSteps.style.display = "block";
       }
+
+      // 2秒后触发移动动画
+      setTimeout(() => {
+        copyBox.classList.add("move-to-top-right");
+      }, 2000);
     });
   </script>
 </body>
