@@ -195,12 +195,13 @@
 
   <!-- PC 步骤 -->
   <div id="pcSteps">
-  
-      <div class="step-card">
-      <h2>第一步：看当前页面右上角，复制 Google Meet 链接</h2>
-
+    <div class="step-card">
+      <h2>第一步：获取 Google Meet 会议链接</h2>
+      <p>下面是你要加入的 Google Meet 会议链接：</p>
+      <div class="copy-text" id="stepLink">正在加载...</div>
+      <p>请复制链接，接着打开浏览器的无痕窗口进行粘贴访问。</p>
     </div>
-  
+
     <div class="step-card">
       <h2>第二步：打开无痕浏览器</h2>
       <p>点击右上角菜单，选择“打开新的无痕式窗口”：</p>
@@ -245,6 +246,7 @@
     const path = window.location.pathname.split("/")[1];
     const meetLink = links[path] || "链接不存在，请检查地址路径";
     document.getElementById("meetLink").textContent = meetLink;
+    document.getElementById("stepLink").textContent = meetLink;
 
     function copyMeetLink() {
       navigator.clipboard.writeText(meetLink).then(() => {
