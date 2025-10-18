@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Google Meet 使用说明</title>
   <style>
-    /* -------------------- 主体样式 -------------------- */
     body {
       font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
       background-color: #f0f2f5;
@@ -14,55 +13,193 @@
       max-width: 960px;
       line-height: 1.6;
       color: #333;
-      display: none; /* 初始隐藏主体内容 */
     }
 
-    h1 { color: #2c3e50; font-size: 2em; text-align: center; margin-bottom: 1.5em; }
-    .step-card { background-color: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); padding: 1.5em; margin-bottom: 2em; transition: transform 0.3s ease; }
-    .step-card:hover { transform: translateY(-2px); }
-    .step-card h2 { color: #007acc; font-size: 1.4em; margin-bottom: 0.5em; }
-    img.screenshot { width: 100%; margin-top: 1em; border-radius: 8px; border: 1px solid #ddd; }
-    .fixed-copy-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; border-radius: 16px; padding: 1.2em; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; width: 310px; overflow: hidden; transition: top 1.2s ease, left 1.2s ease, transform 1.2s ease; }
-    .fixed-copy-box.move-to-top-right { top: 20px; left: calc(100% - 360px); transform: translate(0, 0); }
-    .fixed-copy-box::before { content: ""; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px; background: conic-gradient(red,orange,yellow,green,cyan,blue,violet,red); border-radius: 20px; z-index:1; animation: borderRotate 6s linear infinite; filter: blur(9px); opacity: 0.9; }
-    .fixed-copy-box::after { content: ""; position: absolute; top: 5px; left: 5px; right:5px; bottom:5px; background: white; border-radius: 14px; z-index:2; }
-    .fixed-copy-box * { position: relative; z-index:3; }
-    .fixed-copy-box h2 { font-size:1.1em; margin-bottom:0.5em; font-weight:800; color:#ff4081; text-shadow: 0 0 6px rgba(255,64,129,0.5);}
-    .copy-box { display: flex; flex-direction: column; gap:0.5em; }
-    .copy-text { background:#f9f9f9; padding:0.5em; border-radius:6px; font-family:monospace; font-size:0.9em; overflow-x:auto; word-break: break-all; }
-    .copy-buttons { display:flex; gap:0.5em; }
-    .copy-button, .step-copy-button { flex:1; background-color:#007acc; color:#fff; border:none; border-radius:6px; padding:0.5em 0.8em; font-size:0.9em; font-weight:bold; cursor:pointer; transition:background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 10px rgba(0,122,204,0.6);}
-    .copy-button:hover, .step-copy-button:hover { background-color:#005fa3; transform: scale(1.05);}
-    ul { padding-left:1.2em; }
-    .mobile-guide { display:none; background-color:#fff8e1; border-left:4px solid #ff9800; padding:1em; margin:2em 0; border-radius:8px; }
-    @keyframes borderRotate { from {transform:rotate(0deg);} to{transform:rotate(360deg);} }
+    h1 {
+      color: #2c3e50;
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
 
-    /* -------------------- 密码弹窗样式 -------------------- */
-    #passwordOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.6); display:flex !important; justify-content:center; align-items:center; z-index:2000;}
-    #passwordBox { background-color:#fff; padding:2em; border-radius:16px; width:320px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.2);}
-    #passwordBox h2 { margin-bottom:1em; color:#007acc; }
-    #passwordBox input { width:100%; padding:0.5em; margin-bottom:1em; border-radius:6px; border:1px solid #ccc; font-size:1em; }
-    #passwordBox button { padding:0.5em 1em; font-size:1em; border:none; border-radius:6px; background-color:#007acc; color:white; cursor:pointer; transition: background-color 0.3s;}
-    #passwordBox button:hover { background-color:#005fa3;}
-    #passwordError { color:red; margin-top:0.5em; display:none; }
+    .step-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      padding: 1.5em;
+      margin-bottom: 2em;
+      transition: transform 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .step-card h2 {
+      color: #007acc;
+      font-size: 1.4em;
+      margin-bottom: 0.5em;
+    }
+
+    img.screenshot {
+      width: 100%;
+      margin-top: 1em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .fixed-copy-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 1.2em;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      width: 310px;
+      overflow: hidden;
+      transition: top 1.2s ease, left 1.2s ease, transform 1.2s ease;
+    }
+
+    .fixed-copy-box.move-to-top-right {
+      top: 20px;
+      left: calc(100% - 360px); /* 310px 宽度 + 50px 右边距 + 5px 伪元素扩展 */
+      transform: translate(0, 0);
+    }
+
+    .fixed-copy-box::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: conic-gradient(red, orange, yellow, green, cyan, blue, violet, red);
+      border-radius: 20px;
+      z-index: 1;
+      animation: borderRotate 6s linear infinite;
+      filter: blur(9px);
+      opacity: 0.9;
+    }
+
+    .fixed-copy-box::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      background: white;
+      border-radius: 14px;
+      z-index: 2;
+    }
+
+    .fixed-copy-box * {
+      position: relative;
+      z-index: 3;
+    }
+
+    .fixed-copy-box h2 {
+      font-size: 1.1em;
+      margin-bottom: 0.5em;
+      font-weight: 800;
+      color: #ff4081;
+      text-shadow: 0 0 6px rgba(255, 64, 129, 0.5);
+    }
+
+    .copy-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    .copy-text {
+      background: #f9f9f9;
+      padding: 0.5em;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9em;
+      overflow-x: auto;
+      word-break: break-all;
+    }
+
+    .copy-buttons {
+      display: flex;
+      gap: 0.5em;
+    }
+
+    .copy-button {
+      flex: 1;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5em 0.8em;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 122, 204, 0.6);
+    }
+
+    .copy-button:hover {
+      background-color: #005fa3;
+      transform: scale(1.05);
+    }
+
+    .step-copy-button {
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5em 0.8em;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 122, 204, 0.6);
+      margin-top: 0.5em;
+      display: inline-block;
+    }
+
+    .step-copy-button:hover {
+      background-color: #005fa3;
+      transform: scale(1.05);
+    }
+
+    ul {
+      padding-left: 1.2em;
+    }
+
+    .mobile-guide {
+      display: none;
+      background-color: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 1em;
+      margin: 2em 0;
+      border-radius: 8px;
+    }
+
+    @keyframes borderRotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- -------------------- 密码验证弹窗 -------------------- -->
-  <div id="passwordOverlay">
-    <div id="passwordBox">
-      <h2>请输入访问密码</h2>
-      <input type="password" id="passwordInput" placeholder="输入密码">
-      <button onclick="checkPassword()">提交</button>
-      <div id="passwordError">密码错误，请重试</div>
-    </div>
-  </div>
-
-  <!-- -------------------- 页面主体 -------------------- -->
   <h1>👇 Google Meet 加入使用指南 👉</h1>
+
+  <!-- 固定复制链接与打开链接按钮 -->
   <div class="fixed-copy-box" id="copyBox">
     <h2>第一步：点复制链接按钮</h2>
-    <p>点击下方按钮复制或打开会议链接<br>（手机直接点打开）：</p>
+    <p>点击下方按钮复制或打开会议链接
+      <br>（手机直接点打开）：</p>
     <div class="copy-box">
       <div class="copy-text" id="meetLink">正在加载...</div>
       <div class="copy-buttons">
@@ -72,11 +209,19 @@
     </div>
   </div>
 
+  <!-- 手机提示 -->
   <div class="mobile-guide" id="mobileGuide">
-    <br>📱<br>📱📱<br>📱📱📱<br>手机端点上面的【打开】按钮，<br>会跳转到 Google Meet App。<br>如已登录，请切换为匿名使用：
-    <br>👉 <a href="https://youtu.be/nXj9VF2NcR4" target="_blank">查看教程视频</a>
+    <br>📱
+    <br>📱📱
+    <br>📱📱📱
+    <br>手机端点上面的【打开】按钮，
+    <br>会跳转到 Google Meet App。
+    <br>如已登录，请切换为匿名使用：
+    <br>
+    👉 <a href="https://youtu.be/nXj9VF2NcR4" target="_blank">查看教程视频</a>
   </div>
 
+  <!-- PC 步骤 -->
   <div id="pcSteps">
     <div class="step-card">
       <h2>第一步：获取 Google Meet 会议链接</h2>
@@ -114,50 +259,47 @@
   </div>
 
   <script>
-    /************ 密码验证逻辑 ************/
-    const PASSWORD = "gmeet-8888"; // 修改此行更改密码
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value;
-      const errorDiv = document.getElementById("passwordError");
-      if(input === PASSWORD) {
-        document.getElementById("passwordOverlay").style.display = "none";
-        document.body.style.display = "block"; // 显示主体
-      } else {
-        errorDiv.style.display = "block";
-      }
-    }
-
-    /************ Google Meet 链接逻辑 ************/
     const links = {
-      "abv": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx",
-      "xxx": "https://meet.google.com/xxx-xxxx-xxx"
+      "rfv": "https://meet.google.com/wfs-nehw-rfv",
+      "ktu": "https://meet.google.com/ctx-pvcc-ktu",
+      "tzf": "https://meet.google.com/dac-uorx-tzf",
+      "avt": "https://meet.google.com/nhv-ogbz-avt",
+      "cro": "https://meet.google.com/ivk-owje-cro",
+      "ker": "https://meet.google.com/uga-uzjz-ker",
+      "txi": "https://meet.google.com/zzf-qxpx-txi",
+      "yhr": "https://meet.google.com/npt-hfvo-yhr",
+      "ufw": "https://meet.google.com/wyf-ttop-ufw",
+      "10":  "https://meet.google.com/rty-xerj-gno"
     };
+
     const path = window.location.pathname.split("/")[1];
     const meetLink = links[path] || "链接不存在，请检查地址路径";
     document.getElementById("meetLink").textContent = meetLink;
     document.getElementById("stepLink").textContent = meetLink;
 
-    function copyMeetLink() { 
-      navigator.clipboard.writeText(meetLink).then(()=>alert("已复制链接到剪贴板！\n打开无痕窗口后粘贴访问！")); 
-    }
-    function copyStepLink() { 
-      navigator.clipboard.writeText(meetLink).then(()=>alert("已复制链接到剪贴板！\n打开无痕窗口后粘贴访问！")); 
-    }
-    function openMeetLink() { 
-      if(meetLink.startsWith("http")) window.open(meetLink,"_blank"); 
-      else alert("无效链接，无法打开。"); 
+    function copyMeetLink() {
+      navigator.clipboard.writeText(meetLink).then(() => {
+        alert("已复制链接到剪贴板！\n打开无痕窗口后粘贴访问！");
+      });
     }
 
-    function isMobileOrTablet() { 
-      return /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgent); 
+    function copyStepLink() {
+      const stepLink = document.getElementById("stepLink").textContent;
+      navigator.clipboard.writeText(stepLink).then(() => {
+        alert("已复制链接到剪贴板！\n打开无痕窗口后粘贴访问！");
+      });
+    }
+
+    function openMeetLink() {
+      if (meetLink.startsWith("http")) {
+        window.open(meetLink, "_blank");
+      } else {
+        alert("无效链接，无法打开。");
+      }
+    }
+
+    function isMobileOrTablet() {
+      return /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgent);
     }
 
     window.addEventListener("DOMContentLoaded", () => {
@@ -167,7 +309,7 @@
       const pcSteps = document.getElementById("pcSteps");
       const copyBox = document.getElementById("copyBox");
 
-      if(isMobileOrTablet()) {
+      if (isMobileOrTablet()) {
         copyBtn.style.display = "none";
         openBtn.style.display = "inline-block";
         mobileGuide.style.display = "block";
@@ -180,8 +322,16 @@
       }
 
       // 2秒后触发移动动画
-      setTimeout(() => { copyBox.classList.add("move-to-top-right"); }, 2000);
+      setTimeout(() => {
+        copyBox.classList.add("move-to-top-right");
+      }, 2000);
     });
   </script>
 </body>
 </html>
+
+
+
+
+
+
